@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+    <title>Feedback EasyCoin</title>
+</head>
+{% load i18n %}
+<body>
+<!--Menu-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand">easyCoin</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Inicio<span class="sr-only">(current)</span></a>
+      </li>
+      {% if user.is_superuser %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'relatorio:get_relatorio' %}">Relatorio</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/acl/admin/">Gerenciamento</a>
+      </li>
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login:auth_logout' %}">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<form method="post" class="form-group" style="position: relative; left: 10px; top: 20px;﻿">
+  {% csrf_token %}
+  {{ table }}
+  <input type="submit" value="Submit" class="btn btn-primary">
+  <div style="width: 45%;">
+    <table class="table table-hover table-dark" style="position: relative; top: 30px;﻿">
+      <thead>
+        <tr>
+          <th scope="col">Usuario</th>
+          <th scope="col">Quantidade Recebida</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{% firstof user.destino__pessoa__first_name %} {% firstof user.destino__pessoa__last_name %}</td>
+          <td>{{ user.qtd_rec }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</form>
+
+
+</body>
+</html>

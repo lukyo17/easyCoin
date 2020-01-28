@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>easyAssist Coin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+  <div class="container" >
+
+    <div class="content">
+      <!--FORMULÁRIO DE LOGIN-->
+      <div id="login">
+        <form method="post" action="">
+            {% csrf_token %}
+          <h1>Login</h1>
+
+            {{ form.username.label_tag}}
+            {{ form.username }}
+            {{ form.password.label_tag}}
+            {{ form.password }}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+
+          <p>
+            <input type="submit" value="Logar" />
+          </p>
+
+        </form>
+      </div>
+      </div>
+    </div>
+</body>
+</html>
